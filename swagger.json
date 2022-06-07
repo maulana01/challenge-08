@@ -1,0 +1,1484 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Ini adalah API untuk mengambil data dari database game",
+    "version": "1.0.0",
+    "title": "API Game",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "apiteam@swagger.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "localhost:3000",
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "auth",
+      "description": "Register and login"
+    },
+    {
+      "name": "user game",
+      "description": "Operations about user game",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://swagger.io"
+      }
+    },
+    {
+      "name": "user game biodata",
+      "description": "Operations about user game biodata"
+    },
+    {
+      "name": "user game history",
+      "description": "Operations about user game history",
+      "externalDocs": {
+        "description": "Operations about user game history",
+        "url": "http://swagger.io"
+      }
+    }
+  ],
+  "schemes": ["http"],
+  "security": [
+    {
+      "api_key": []
+    }
+  ],
+  "paths": {
+    "/register": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Register a new user",
+        "description": "",
+        "operationId": "registerUser",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Register user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Register"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Berhasil Membuat User Game",
+            "schema": {
+              "$ref": "#/definitions/UserGameCreate200"
+            }
+          },
+          "500": {
+            "description": "Gagal Membuat User Game",
+            "schema": {
+              "$ref": "#/definitions/UserGameCreate500"
+            }
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Login a user",
+        "description": "",
+        "operationId": "loginUser",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Register user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Login"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Login Success",
+            "schema": {
+              "$ref": "#/definitions/Login200"
+            }
+          },
+          "500": {
+            "description": "Username atau Password salah!"
+          }
+        }
+      }
+    },
+    "/create-user-games": {
+      "post": {
+        "tags": ["user game"],
+        "summary": "Add a new User Game to DB",
+        "description": "",
+        "operationId": "addUserGame",
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "username",
+            "type": "string",
+            "description": "Username of user",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "email",
+            "type": "string",
+            "description": "Email of user",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "password",
+            "type": "string",
+            "description": "Password of user",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "id_role",
+            "type": "integer",
+            "description": "ID Role of User",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "avatar",
+            "type": "file",
+            "description": "The avatar to upload.",
+            "format": "binary"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Berhasil Membuat User Game",
+            "schema": {
+              "$ref": "#/definitions/UserGameCreate200"
+            }
+          },
+          "500": {
+            "description": "Gagal Membuat User Game",
+            "schema": {
+              "$ref": "#/definitions/UserGameCreate500"
+            }
+          }
+        }
+      }
+    },
+    "/get-users-games": {
+      "get": {
+        "tags": ["user game"],
+        "summary": "Find All User Game",
+        "operationId": "findAllUserGame",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Berhasil Get All User Game",
+            "schema": {
+              "$ref": "#/definitions/UserGameGetAll200"
+            }
+          },
+          "404": {
+            "description": "User Game Tidak di temukan",
+            "schema": {
+              "$ref": "#/definitions/UserGameGetAll404"
+            }
+          }
+        }
+      }
+    },
+    "/get-user-games/{id_user}": {
+      "get": {
+        "tags": ["user game"],
+        "summary": "Finds User Game by Id",
+        "operationId": "findUserGameById",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id_user",
+            "in": "path",
+            "description": "id_user that need to be fetched, use the id_user from post response",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Berhasil Get User Game By Id",
+            "schema": {
+              "$ref": "#/definitions/UserGameGetById200"
+            }
+          },
+          "404": {
+            "description": "User Game dengan ID 1 Tidak di temukan",
+            "schema": {
+              "$ref": "#/definitions/UserGameGetById404"
+            }
+          }
+        }
+      }
+    },
+    "/update-user-games/{id_user}": {
+      "put": {
+        "tags": ["user game"],
+        "summary": "Update an existing user game",
+        "description": "",
+        "operationId": "updateUserGame",
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id_user",
+            "in": "path",
+            "description": "id_user that need to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "username",
+            "type": "string",
+            "description": "Username of user",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "email",
+            "type": "string",
+            "description": "Email of user",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "password",
+            "type": "string",
+            "description": "Password of user",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "id_role",
+            "type": "integer",
+            "description": "ID Role of User",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "avatar",
+            "type": "file",
+            "description": "The avatar to upload.",
+            "format": "binary"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Berhasil Mengupdate User Game",
+            "schema": {
+              "$ref": "#/definitions/UserGameUpdate200"
+            }
+          },
+          "404": {
+            "description": "User Game dengan ID 700 Tidak di temukan",
+            "schema": {
+              "$ref": "#/definitions/UserGameUpdate404"
+            }
+          }
+        }
+      }
+    },
+    "/delete-user-games/{id_user}": {
+      "delete": {
+        "tags": ["user game"],
+        "summary": "Deletes a user game by id",
+        "description": "",
+        "operationId": "deleteUserGame",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id_user",
+            "in": "path",
+            "required": true,
+            "description": "Id_user of user game that need to be deleted",
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Berhasil Menghapus User Game",
+            "schema": {
+              "$ref": "#/definitions/UserGameDelete200"
+            }
+          },
+          "404": {
+            "description": "User Game dengan ID 700 Tidak di temukan",
+            "schema": {
+              "$ref": "#/definitions/UserGameDelete404"
+            }
+          }
+        }
+      }
+    },
+    "/create-user-game-biodata": {
+      "post": {
+        "tags": ["user game biodata"],
+        "summary": "Add a new User Game Biodata to DB",
+        "description": "",
+        "operationId": "addUserGameBiodata",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User Game Biodata object that needs to be added to the db",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserGameBiodata"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Berhasil Membuat User Game Biodata",
+            "schema": {
+              "$ref": "#/definitions/UserGameBiodataCreate200"
+            }
+          },
+          "500": {
+            "description": "Gagal Membuat User Game Biodata",
+            "schema": {
+              "$ref": "#/definitions/UserGameBiodataCreate500"
+            }
+          }
+        }
+      }
+    },
+    "/get-user-game-biodatas": {
+      "get": {
+        "tags": ["user game biodata"],
+        "summary": "Find All User Game Biodata",
+        "operationId": "findAllUserGameBiodata",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Berhasil Get All User Game Biodata",
+            "schema": {
+              "$ref": "#/definitions/UserGameBiodataGetAll200"
+            }
+          },
+          "404": {
+            "description": "User Game Biodata Tidak di temukan",
+            "schema": {
+              "$ref": "#/definitions/UserGameBiodataGetAll404"
+            }
+          }
+        }
+      }
+    },
+    "/get-user-game-biodata/{id_user}": {
+      "get": {
+        "tags": ["user game biodata"],
+        "summary": "Finds User Game Biodata by id_user",
+        "operationId": "findUserGameBiodataById",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id_user",
+            "in": "path",
+            "description": "id_user that need to be fetched, use the id_user from post response",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Berhasil Get User Game Biodata By Id",
+            "schema": {
+              "$ref": "#/definitions/UserGameBiodataGetById200"
+            }
+          },
+          "404": {
+            "description": "User Game Biodata dengan ID 700 Tidak di temukan",
+            "schema": {
+              "$ref": "#/definitions/UserGameBiodataGetById404"
+            }
+          }
+        }
+      }
+    },
+    "/update-user-game-biodata/{id_user}": {
+      "put": {
+        "tags": ["user game biodata"],
+        "summary": "Update an existing user game biodata",
+        "description": "",
+        "operationId": "updateUserGameBiodata",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id_user",
+            "in": "path",
+            "description": "id_user that need to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User Game Biodata object that needs to be updated to the db",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserGameBiodataUpdate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Berhasil Mengupdate User Game Biodata",
+            "schema": {
+              "$ref": "#/definitions/UserGameBiodataUpdate200"
+            }
+          },
+          "404": {
+            "description": "User Game Biodata dengan ID 700 Tidak di temukan",
+            "schema": {
+              "$ref": "#/definitions/UserGameBiodataUpdate404"
+            }
+          }
+        }
+      }
+    },
+    "/delete-user-game-biodata/{id_user}": {
+      "delete": {
+        "tags": ["user game biodata"],
+        "summary": "Deletes a user game biodata by id_user",
+        "description": "",
+        "operationId": "deleteUserGameBiodata",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id_user",
+            "in": "path",
+            "required": true,
+            "description": "Id_user of user game biodata that needs to be deleted",
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Berhasil Menghapus User Game Biodata",
+            "schema": {
+              "$ref": "#/definitions/UserGameBiodataDelete200"
+            }
+          },
+          "404": {
+            "description": "User Game Biodata dengan ID 700 Tidak di temukan",
+            "schema": {
+              "$ref": "#/definitions/UserGameBiodataDelete404"
+            }
+          }
+        }
+      }
+    },
+    "/create-user-game-history": {
+      "post": {
+        "tags": ["user game history"],
+        "summary": "Add a new User Game History to DB",
+        "description": "",
+        "operationId": "addUserGameHistory",
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "id_user",
+            "type": "string",
+            "description": "ID User of user",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "skor",
+            "type": "integer",
+            "description": "Score of user",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "tanggal_bermain",
+            "type": "string",
+            "description": "Tanggal Bermain of user",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "gameplay_video",
+            "type": "file",
+            "description": "The Gameplay Video to upload.",
+            "format": "binary"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Berhasil Membuat User Game History",
+            "schema": {
+              "$ref": "#/definitions/UserGameHistoryCreate200"
+            }
+          },
+          "500": {
+            "description": "Gagal Membuat User Game History",
+            "schema": {
+              "$ref": "#/definitions/UserGameHistoryCreate500"
+            }
+          }
+        }
+      }
+    },
+    "/get-user-game-histories": {
+      "get": {
+        "tags": ["user game history"],
+        "summary": "Find All User Game History",
+        "operationId": "findAllUserGameHistory",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Berhasil Get All User Game History",
+            "schema": {
+              "$ref": "#/definitions/UserGameHistoryGetAll200"
+            }
+          },
+          "404": {
+            "description": "User Game History Tidak di temukan",
+            "schema": {
+              "$ref": "#/definitions/UserGameHistoryGetAll404"
+            }
+          }
+        }
+      }
+    },
+    "/get-user-game-history/{id_user}": {
+      "get": {
+        "tags": ["user game history"],
+        "summary": "Finds User Game History by id_user",
+        "operationId": "findUserGameHistoryById",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id_user",
+            "in": "path",
+            "description": "id_user that need to be fetched, use the id_user from post response",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Berhasil Get All User Game History By id_user",
+            "schema": {
+              "$ref": "#/definitions/UserGameHistoryGetById200"
+            }
+          },
+          "404": {
+            "description": "User Game History dengan ID 700 Tidak di temukan",
+            "schema": {
+              "$ref": "#/definitions/UserGameHistoryGetById404"
+            }
+          }
+        }
+      }
+    },
+    "/delete-user-game-history-id/{id_history_user}": {
+      "delete": {
+        "tags": ["user game history"],
+        "summary": "Deletes a user game history by id_history_user",
+        "operationId": "deleteUserGameHistoryByIdHistory",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id_history_user",
+            "in": "path",
+            "description": "id_history_user that need to be deleted",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Berhasil Menghapus User Game History",
+            "schema": {
+              "$ref": "#/definitions/UserGameHistoryDeleteByIdHistory200"
+            }
+          },
+          "404": {
+            "description": "User Game History dengan ID History 700 Tidak di temukan",
+            "schema": {
+              "$ref": "#/definitions/UserGameHistoryDeleteByIdHistory404"
+            }
+          }
+        }
+      }
+    },
+    "/delete-user-game-history-usergameid/{id_user}": {
+      "delete": {
+        "tags": ["user game history"],
+        "summary": "Deletes a user game history by id_user",
+        "operationId": "deleteUserGameHistoryByIdUser",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id_user",
+            "in": "path",
+            "description": "id_user that need to be deleted",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Berhasil Menghapus User Game History",
+            "schema": {
+              "$ref": "#/definitions/UserGameHistoryDeleteByIdUser200"
+            }
+          },
+          "404": {
+            "description": "User Game History dengan ID User 700 Tidak di temukan",
+            "schema": {
+              "$ref": "#/definitions/UserGameHistoryDeleteByIdUser404"
+            }
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "authorization",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "Login": {
+      "type": "object",
+      "required": ["username", "password"],
+      "properties": {
+        "username": {
+          "type": "string",
+          "example": "maul.mam"
+        },
+        "password": {
+          "type": "string",
+          "example": "123456"
+        }
+      }
+    },
+    "Login200": {
+      "type": "object",
+      "allOf": [
+        {
+          "properties": {
+            "id_user": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        },
+        {
+          "$ref": "#/definitions/UserGame"
+        },
+        {
+          "properties": {
+            "token": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+            }
+          }
+        },
+        {
+          "$ref": "#/definitions/createdAndUpdatedAt"
+        }
+      ]
+    },
+    "Register": {
+      "type": "object",
+      "required": ["username", "email", "password", "id_role"],
+      "properties": {
+        "username": {
+          "type": "string",
+          "example": "maul.mam"
+        },
+        "email": {
+          "type": "string",
+          "example": "imammaul12@gmail.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "123456"
+        },
+        "id_role": {
+          "type": "integer",
+          "example": 2
+        }
+      }
+    },
+    "UserGame": {
+      "type": "object",
+      "required": ["username", "email", "password", "id_role"],
+      "properties": {
+        "username": {
+          "type": "string",
+          "example": "maul.mam"
+        },
+        "email": {
+          "type": "string",
+          "example": "imammaul12@gmail.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "123456"
+        },
+        "id_role": {
+          "type": "integer",
+          "example": 2
+        }
+      }
+    },
+    "UserGameUpdate": {
+      "type": "object",
+      "required": ["username", "email", "password", "id_role"],
+      "properties": {
+        "username": {
+          "type": "string",
+          "example": "imamaja"
+        },
+        "email": {
+          "type": "string",
+          "example": "imammaul05@gmail.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "imam1234"
+        },
+        "id_role": {
+          "type": "integer",
+          "example": 2
+        }
+      }
+    },
+    "UserGameBiodata": {
+      "type": "object",
+      "required": ["nama", "tanggal_lahir", "tempat_lahir", "alamat", "no_hp", "id_user"],
+      "properties": {
+        "nama": {
+          "type": "string",
+          "example": "Maulana Imam Malik"
+        },
+        "tanggal_lahir": {
+          "type": "string",
+          "example": "2001-08-18"
+        },
+        "tempat_lahir": {
+          "type": "string",
+          "example": "Serang, Banten"
+        },
+        "alamat": {
+          "type": "string",
+          "example": "Jalan Raya Serang"
+        },
+        "no_hp": {
+          "type": "string",
+          "example": "6287728475930"
+        },
+        "id_user": {
+          "type": "integer",
+          "example": 1
+        }
+      }
+    },
+    "UserGameBiodataUpdate": {
+      "type": "object",
+      "required": ["nama", "tanggal_lahir", "tempat_lahir", "alamat", "no_hp"],
+      "properties": {
+        "nama": {
+          "type": "string",
+          "example": "Malik Imam Maulana"
+        },
+        "tanggal_lahir": {
+          "type": "string",
+          "example": "2000-03-11"
+        },
+        "tempat_lahir": {
+          "type": "string",
+          "example": "Cilegon, Banten"
+        },
+        "alamat": {
+          "type": "string",
+          "example": "Jalan Raya Cilegon"
+        },
+        "no_hp": {
+          "type": "string",
+          "example": "6287724859350"
+        }
+      }
+    },
+    "UserGameHistory": {
+      "type": "object",
+      "required": ["id_user", "skor", "tanggal_bermain"],
+      "properties": {
+        "id_user": {
+          "type": "integer",
+          "example": 1
+        },
+        "skor": {
+          "type": "integer",
+          "example": 84
+        },
+        "tanggal_bermain": {
+          "type": "string",
+          "example": "2022-03-12"
+        }
+      }
+    },
+    "createdAndUpdatedAt": {
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2018-01-01T00:00:00.000Z"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2018-01-01T00:00:00.000Z"
+        }
+      }
+    },
+    "UserGameBiodataFkData": {
+      "type": "object",
+      "properties": {
+        "user_game_biodata": {
+          "type": "object",
+          "allOf": [
+            {
+              "properties": {
+                "id_user": {
+                  "type": "integer",
+                  "example": 1
+                }
+              }
+            },
+            {
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "example": "maul.mam"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "UserGameHistoryFkData": {
+      "type": "object",
+      "properties": {
+        "user_game_history": {
+          "type": "object",
+          "allOf": [
+            {
+              "properties": {
+                "id_user": {
+                  "type": "integer",
+                  "example": 1
+                }
+              }
+            },
+            {
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "example": "maul.mam"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "UserGameCreate200": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Berhasil Membuat User Game"
+        },
+        "result": {
+          "type": "object",
+          "allOf": [
+            {
+              "properties": {
+                "id_user": {
+                  "type": "integer",
+                  "example": 1
+                }
+              }
+            },
+            {
+              "$ref": "#/definitions/UserGame"
+            },
+            {
+              "$ref": "#/definitions/createdAndUpdatedAt"
+            },
+            {
+              "properties": {
+                "token": {
+                  "type": "string",
+                  "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "UserGameCreate500": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Gagal Membuat User Game"
+        },
+        "err": {
+          "type": "string",
+          "example": "Validation error: Username Telah digunakan!,\nValidation error: Email Telah digunakan!"
+        }
+      }
+    },
+    "UserGameGetAll200": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Berhasil Get All User Game"
+        },
+        "result": {
+          "type": "array",
+          "items": {
+            "allOf": [
+              {
+                "properties": {
+                  "id_user": {
+                    "type": "integer",
+                    "example": 1
+                  }
+                }
+              },
+              {
+                "$ref": "#/definitions/UserGame"
+              },
+              {
+                "$ref": "#/definitions/createdAndUpdatedAt"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "UserGameGetAll404": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "User Game Tidak di temukan"
+        },
+        "result": {
+          "type": "array",
+          "default": []
+        }
+      }
+    },
+    "UserGameGetById200": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Berhasil Get User Game By Id"
+        },
+        "result": {
+          "allOf": [
+            {
+              "properties": {
+                "id_user": {
+                  "type": "integer",
+                  "example": 1
+                }
+              }
+            },
+            {
+              "$ref": "#/definitions/UserGame"
+            },
+            {
+              "$ref": "#/definitions/createdAndUpdatedAt"
+            }
+          ]
+        }
+      }
+    },
+    "UserGameGetById404": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "User Game dengan ID 1 Tidak di temukan"
+        },
+        "result": {
+          "default": null
+        }
+      }
+    },
+    "UserGameUpdate200": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Berhasil Mengupdate User Game"
+        },
+        "result": {
+          "type": "array",
+          "default": [1]
+        }
+      }
+    },
+    "UserGameUpdate404": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "User Game dengan ID 700 Tidak di temukan"
+        },
+        "result": {
+          "type": "array",
+          "default": [0]
+        }
+      }
+    },
+    "UserGameDelete200": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Berhasil Menghapus User Game"
+        },
+        "result": {
+          "type": "array",
+          "default": 1
+        }
+      }
+    },
+    "UserGameDelete404": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "User Game dengan ID 700 Tidak di temukan"
+        },
+        "result": {
+          "type": "array",
+          "default": 0
+        }
+      }
+    },
+    "UserGameBiodataCreate200": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Berhasil Membuat User Game Biodata"
+        },
+        "result": {
+          "type": "object",
+          "allOf": [
+            {
+              "properties": {
+                "id_biodata_user": {
+                  "type": "integer",
+                  "example": 1
+                }
+              }
+            },
+            {
+              "$ref": "#/definitions/UserGameBiodata"
+            },
+            {
+              "$ref": "#/definitions/createdAndUpdatedAt"
+            }
+          ]
+        }
+      }
+    },
+    "UserGameBiodataCreate500": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Gagal Membuat User Game Biodata"
+        },
+        "err": {
+          "type": "string",
+          "example": "Validation error: ID User Telah digunakan!"
+        }
+      }
+    },
+    "UserGameBiodataGetAll200": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Berhasil Get All User Game Biodata"
+        },
+        "result": {
+          "type": "array",
+          "items": {
+            "allOf": [
+              {
+                "properties": {
+                  "id_biodata_user": {
+                    "type": "integer",
+                    "example": 1
+                  }
+                }
+              },
+              {
+                "$ref": "#/definitions/UserGameBiodata"
+              },
+              {
+                "$ref": "#/definitions/createdAndUpdatedAt"
+              },
+              {
+                "$ref": "#/definitions/UserGameBiodataFkData"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "UserGameBiodataGetAll404": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "User Game Biodata Tidak di temukan"
+        },
+        "result": {
+          "type": "array",
+          "default": []
+        }
+      }
+    },
+    "UserGameBiodataGetById200": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Berhasil Get User Game Biodata By Id"
+        },
+        "result": {
+          "allOf": [
+            {
+              "properties": {
+                "id_biodata_user": {
+                  "type": "integer",
+                  "example": 1
+                }
+              }
+            },
+            {
+              "$ref": "#/definitions/UserGameBiodata"
+            },
+            {
+              "$ref": "#/definitions/createdAndUpdatedAt"
+            },
+            {
+              "$ref": "#/definitions/UserGameBiodataFkData"
+            }
+          ]
+        }
+      }
+    },
+    "UserGameBiodataGetById404": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "User Game Biodata dengan ID 700 Tidak di temukan"
+        },
+        "result": {
+          "default": null
+        }
+      }
+    },
+    "UserGameBiodataUpdate200": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Berhasil Mengupdate User Game Biodata"
+        },
+        "result": {
+          "type": "array",
+          "default": [1]
+        }
+      }
+    },
+    "UserGameBiodataUpdate404": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "User Game Biodata dengan ID 700 Tidak di temukan"
+        },
+        "result": {
+          "type": "array",
+          "default": [0]
+        }
+      }
+    },
+    "UserGameBiodataDelete200": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Berhasil Menghapus User Game Biodata"
+        },
+        "result": {
+          "default": 1
+        }
+      }
+    },
+    "UserGameBiodataDelete404": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "User Game Biodata dengan ID 700 Tidak di temukan"
+        },
+        "result": {
+          "default": 0
+        }
+      }
+    },
+    "UserGameHistoryCreate200": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Berhasil Membuat User Game History"
+        },
+        "result": {
+          "type": "object",
+          "allOf": [
+            {
+              "properties": {
+                "id_history_user": {
+                  "type": "integer",
+                  "example": 1
+                }
+              }
+            },
+            {
+              "$ref": "#/definitions/UserGameHistory"
+            },
+            {
+              "$ref": "#/definitions/createdAndUpdatedAt"
+            }
+          ]
+        }
+      }
+    },
+    "UserGameHistoryCreate500": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Gagal Membuat User Game History"
+        },
+        "err": {
+          "type": "string",
+          "example": "notNull Violation: ID User tidak boleh kosong!"
+        }
+      }
+    },
+    "UserGameHistoryGetAll200": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Berhasil Get All User Game History"
+        },
+        "result": {
+          "type": "array",
+          "items": {
+            "allOf": [
+              {
+                "properties": {
+                  "id_history_user": {
+                    "type": "integer",
+                    "example": 1
+                  }
+                }
+              },
+              {
+                "$ref": "#/definitions/UserGameHistory"
+              },
+              {
+                "$ref": "#/definitions/createdAndUpdatedAt"
+              },
+              {
+                "$ref": "#/definitions/UserGameHistoryFkData"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "UserGameHistoryGetAll404": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "User Game History Tidak di temukan"
+        },
+        "result": {
+          "type": "array",
+          "default": []
+        }
+      }
+    },
+    "UserGameHistoryGetById200": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Berhasil Get All User Game History By id_user"
+        },
+        "result": {
+          "type": "array",
+          "items": {
+            "allOf": [
+              {
+                "properties": {
+                  "id_history_user": {
+                    "type": "integer",
+                    "example": 1
+                  }
+                }
+              },
+              {
+                "$ref": "#/definitions/UserGameHistory"
+              },
+              {
+                "$ref": "#/definitions/createdAndUpdatedAt"
+              },
+              {
+                "$ref": "#/definitions/UserGameHistoryFkData"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "UserGameHistoryGetById404": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "User Game History dengan ID 700 Tidak di temukan"
+        },
+        "result": {
+          "default": []
+        }
+      }
+    },
+    "UserGameHistoryDeleteByIdHistory200": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Berhasil Menghapus User Game History"
+        },
+        "result": {
+          "default": 1
+        }
+      }
+    },
+    "UserGameHistoryDeleteByIdHistory404": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "User Game History dengan ID History 700 Tidak di temukan"
+        },
+        "result": {
+          "default": 0
+        }
+      }
+    },
+    "UserGameHistoryDeleteByIdUser200": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Berhasil Menghapus User Game History"
+        },
+        "result": {
+          "default": 1
+        }
+      }
+    },
+    "UserGameHistoryDeleteByIdUser404": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "User Game History dengan ID User 700 Tidak di temukan"
+        },
+        "result": {
+          "default": 0
+        }
+      }
+    },
+    "ApiResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "type": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}

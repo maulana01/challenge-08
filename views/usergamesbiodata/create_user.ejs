@@ -1,0 +1,41 @@
+<!-- @format -->
+
+<%- include('../partials/_header') %>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Create New User Game Biodata</h1>
+          </div>
+
+          <div class="col-lg-8">
+            <form method="post" action="/viewroleuser/usergamesbiodata" class="mb-5">
+              <div class="mb-3">
+                <label for="nama" class="form-label">Nama</label>
+                <input type="text" class="form-control" id="nama" name="nama" required autofocus />
+              </div>
+              <div class="mb-3">
+                <label for="tanggal_lahir" class="form-label">Tanggal Lahir</label>
+                <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" required />
+              </div>
+              <div class="mb-3">
+                <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
+                <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir" minlength="6" required />
+              </div>
+              <div class="mb-3">
+                <label for="alamat" class="form-label">Alamat</label>
+                <input type="text" class="form-control" id="alamat" name="alamat" minlength="6" required />
+              </div>
+              <div class="mb-3">
+                <label for="no_hp" class="form-label">No Hp</label>
+                <input type="number" class="form-control" id="no_hp" name="no_hp" required />
+              </div>
+              <button type="submit" class="btn btn-primary">Create User Game Biodata</button>
+            </form>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <%- include('../partials/_footer') %>
+
+</html>

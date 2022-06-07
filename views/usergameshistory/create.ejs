@@ -1,0 +1,38 @@
+<!-- @format -->
+
+<%- include('../partials/_header') %>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Create New User Game History</h1>
+          </div>
+
+          <div class="col-lg-8">
+            <form method="post" action="/view/usergameshistory" class="mb-5" enctype="multipart/form-data">
+              <div class="mb-3">
+                <label for="id_user" class="form-label">Username</label>
+                <select class="form-control" id="id_user" name="id_user" required>
+                  <option value="" disabled selected>Pilih Username</option>
+                  <% for (var i = 0; i < usergames.length; i++) { %>
+                    <option value="<%= usergames[i].id_user %>"><%= usergames[i].username %></option>
+                  <% } %>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="skor" class="form-label">Skor</label>
+                <input type="number" class="form-control" id="skor" name="skor" required />
+              </div>
+              <div class="mb-3">
+                <label for="gameplay_video" class="form-label">Gameplay Video</label>
+                <input type="file" class="form-control" id="gameplay_video" name="gameplay_video" required />
+              </div>
+              <button type="submit" class="btn btn-primary">Create User Game History</button>
+            </form>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <%- include('../partials/_footer') %>
+
+</html>

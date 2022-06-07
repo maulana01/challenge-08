@@ -1,0 +1,60 @@
+<!-- @format -->
+
+<%- include('../partials/_header') %>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">User Game Biodata</h1>
+            <% if (!usergamebiodata) { %>
+              <a href="/viewroleuser/usergamesbiodata/create" class="btn btn-success">Create User Game Biodata</a>
+            <% } %>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table table-striped table-sm">
+              <thead>
+                <tr>
+                  <th scope="col">No</th>
+                  <th scope="col">Nama</th>
+                  <th scope="col">Tanggal Lahir</th>
+                  <th scope="col">Tempat Lahir</th>
+                  <th scope="col">Alamat</th>
+                  <th scope="col">No HP</th>
+                  <th scope="col">Username</th>
+                  <th scope="col">Created At</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if (usergamebiodata !== null) { %>
+                <tr>
+                  <td>1</td>
+                  <td><%= usergamebiodata.nama %></td>
+                  <td><%= usergamebiodata.tanggal_lahir %></td>
+                  <td><%= usergamebiodata.tempat_lahir %></td>
+                  <td><%= usergamebiodata.alamat %></td>
+                  <td><%= usergamebiodata.no_hp %></td>
+                  <td><%= usergamebiodata.user_game_biodata.username %></td>
+                  <td><%= moment(usergamebiodata.createdAt).format('Do MMMM, YYYY') %></td>
+                  <td>
+                    <a href="/view/usergamesbiodata/update/<%= usergamebiodata.user_game_biodata.id_user %>"><button class="btn btn-success btn-sm">Edit Data</button></a>
+                    <!-- <a href="/view/usergamesbiodata/delete/<%= usergamebiodata.user_game_biodata.id_user %>"
+                      ><button class="btn btn-danger btn-sm">Delete Data</button></a
+                    > -->
+                  </td>
+                </tr>
+               <% } else { %>
+                <tr>
+                  <td colspan="9" class="text-center">Tidak ada data!</td>
+                </tr>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <%- include('../partials/_footer') %>
+
+</html>

@@ -1,0 +1,48 @@
+<!-- @format -->
+
+<%- include('../partials/_header') %>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Update User Game</h1>
+          </div>
+
+          <div class="col-lg-8">
+            <form method="post" action="/view/usergames/<%= usergame.id_user %> " class="mb-5" enctype="multipart/form-data">
+              <input type="hidden" name="_method" value="PUT">
+              <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" value="<%= usergame.username %>" autofocus />
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="text" class="form-control" id="email" value="<%= usergame.email %>" name="email" />
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">New Password</label>
+                <input type="password" class="form-control" id="password" name="password" minlength="6" />
+              </div>
+              <div class="mb-3">
+                <input type="hidden" name="avatar_name" value="<%= usergame.avatar %>">
+                <label for="avatar" class="form-label">Avatar</label>
+                <input type="file" class="form-control" id="avatar" name="avatar" required />
+              </div>
+              <div class="mb-3">
+                <label for="id_role" class="form-label">Role</label>
+                <!-- select option id_role -->
+                <select class="form-control" id="id_role" name="id_role" required>
+                  <option value="" disabled selected>Pilih Role</option>
+                  <option value="1">Admin</option>
+                  <option value="2">User</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary">Update User</button>
+            </form>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <%- include('../partials/_footer') %>
+
+</html>

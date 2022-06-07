@@ -1,0 +1,168 @@
+{
+	"info": {
+		"_postman_id": "5fe1920b-3f60-466e-8875-f9392c07cb4e",
+		"name": "Challenge 04 - User Game History",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12537853"
+	},
+	"item": [
+		{
+			"name": "Get All User Game History",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNjUwNDYwOTA5LCJleHAiOjE2NTA0NjgxMDl9.u18qCE7E_OPsRKyxcKem8Yp0wUNpPPvRlMHsgvRCNOQ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/api/get-user-game-histories",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"get-user-game-histories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All User Game History By ID User",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNjUwNDYwOTA5LCJleHAiOjE2NTA0NjgxMDl9.u18qCE7E_OPsRKyxcKem8Yp0wUNpPPvRlMHsgvRCNOQ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/api/get-user-game-history/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"get-user-game-history",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create User Game History",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwiaWRfcm9sZSI6MSwiaWF0IjoxNjUzNjU1OTgzLCJleHAiOjE2NTM2NTY4ODN9.B6LRHpqA4lV2TK60oxsDTQkQA6dArhHsuMZ056_7DII",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id_user",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "skor",
+							"value": "73",
+							"type": "text"
+						},
+						{
+							"key": "tanggal_bermain",
+							"value": "2022-04-06",
+							"type": "text"
+						},
+						{
+							"key": "gameplay_video",
+							"type": "file",
+							"src": "/C:/Users/MIM/Downloads/Telegram Desktop/kapal_meledak.mp4"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/create-user-game-history",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"create-user-game-history"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User Game History By History ID",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwiaWRfcm9sZSI6MSwiaWF0IjoxNjUzNjU1OTgzLCJleHAiOjE2NTM2NTY4ODN9.B6LRHpqA4lV2TK60oxsDTQkQA6dArhHsuMZ056_7DII",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/api/delete-user-game-history-id/9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"delete-user-game-history-id",
+						"9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete All User Game History By ID User",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwiaWRfcm9sZSI6MSwiaWF0IjoxNjUzNjU1OTgzLCJleHAiOjE2NTM2NTY4ODN9.B6LRHpqA4lV2TK60oxsDTQkQA6dArhHsuMZ056_7DII",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/api/delete-user-game-history-usergameid/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"delete-user-game-history-usergameid",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

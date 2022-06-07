@@ -1,0 +1,42 @@
+{
+  "name": "challenge-04",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --detectOpenHandles --runInBand --verbose",
+    "test:authController": "jest --detectOpenHandles -- authControllerIntegrationTest.spec.js",
+    "test:usergamesApi": "jest --detectOpenHandles -- usergamesApiControllerIntegrationTest.spec.js",
+    "test:usergamesBiodataApi": "jest --detectOpenHandles -- usergamesBiodataApiControllerIntegrationTest.spec.js",
+    "test:usergamesHistoryApi": "jest --detectOpenHandles -- usergamesHistoryApiControllerIntegrationTest.spec.js",
+    "npm start": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "connect-flash": "^0.1.1",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.0.1",
+    "ejs": "^3.1.6",
+    "express": "^4.17.3",
+    "express-flash": "^0.0.2",
+    "express-session": "^1.17.2",
+    "jest": "^28.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "mailchecker": "^4.1.17",
+    "moment": "^2.29.2",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.4",
+    "nodemailer": "^6.7.5",
+    "otp-generator": "^4.0.0",
+    "passport": "^0.5.2",
+    "passport-local": "^1.0.0",
+    "pg": "^8.7.3",
+    "sequelize": "^6.17.0",
+    "supertest": "^6.2.3",
+    "swagger-ui-express": "^4.3.0",
+    "validator": "^13.7.0"
+  }
+}

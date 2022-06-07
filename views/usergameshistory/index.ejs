@@ -1,0 +1,66 @@
+<!-- @format -->
+
+<%- include('../partials/_header') %>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">User Game History</h1>
+            <a href="/view/usergameshistory/create" class="btn btn-success">Create User Game History</a>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table table-striped table-sm">
+              <thead>
+                <tr>
+                  <th scope="col">No</th>
+                  <th scope="col">Username</th>
+                  <th scope="col">Skor</th>
+                  <th scope="col">Tanggal Bermain</th>
+                  <th scope="col">Gameplay Video</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if (usergameshistory.length > 0) { %> <% usergameshistory.forEach((usergamehistory,index) => { %>
+                <tr>
+                  <td><%= index+1 %></td>
+                  <td><%= usergamehistory.user_game_history.username %></td>
+                  <td><%= usergamehistory.skor %></td>
+                  <td><%= moment(usergamehistory.tanggal_bermain).format('Do MMMM, YYYY') %></td>
+                  <td>
+                    <video width="320" height="240" controls="controls">
+                      <source src="/videos/<%= usergamehistory.gameplay_video %>" type="video/mp4">
+                    </video>
+                  </td>
+                  <td>
+                    <a href="/view/usergameshistory/deletebyhistory/<%= usergamehistory.id_history_user %>"><button class="btn btn-warning btn-sm">Delete Data By ID</button></a>
+                    <a href="/view/usergameshistory/deletebyusergame/<%= usergamehistory.id_user %>"
+                      ><button class="btn btn-danger btn-sm">Delete Data By Username</button></a
+                    >
+                  </td>
+                </tr>
+                <% }) %> <% } else { %>
+                <tr>
+                  <td colspan="6" class="text-center">Tidak ada data!</td>
+                </tr>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+          <% if (usergameshistory.length > 0) { %>
+          <div class="card text-dark bg-light mb-3" style="max-width: 18rem;">
+            <div class="card-header">Note</div>
+            <div class="card-body">
+              <h6 class="card-title">Informasi Arti Tiap Button Delete</h6>
+              <p class="card-text"><div class="note-yellow"></div>&nbsp;: Button ini akan menghapus 1 data pada history user berdasarkan id</p>
+              <p class="card-text"><div class="note-red"></div>&nbsp;: Button ini akan menghapus 1 atau lebih dari satu data pada history user berdasarkan username user</p>
+            </div>
+          </div>
+          <% } %>
+        </main>
+      </div>
+    </div>
+
+    <%- include('../partials/_footer') %>
+
+</html>

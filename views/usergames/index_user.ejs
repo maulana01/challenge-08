@@ -1,0 +1,54 @@
+<!-- @format -->
+
+<%- include('../partials/_header') %>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">User Game</h1>
+            <!-- <a href="/view/usergames/create" class="btn btn-success">Create User Game</a> -->
+          </div>
+
+          <div class="table-responsive">
+            <table class="table table-striped table-sm">
+              <thead>
+                <tr>
+                  <th scope="col" class="text-center">No</th>
+                  <th scope="col" class="text-center">Avatar</th>
+                  <th scope="col" class="text-center">Username</th>
+                  <th scope="col" class="text-center">Email</th>
+                  <th scope="col" class="text-center">Password</th>
+                  <th scope="col" class="text-center">Created At</th>
+                  <th scope="col" class="text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if (usergame !== null) { %>
+                <tr>
+                  <td>1</td>
+                  <td><img width="100" height="100" src="images/<%= usergame.avatar || 'anon-avatar.jpg' %>" alt="No Avatar"></td>
+                  <td><%= usergame.username %></td>
+                  <td><%= usergame.email %></td>
+                  <td><%= usergame.password %></td>
+                  <td><%= moment(usergame.createdAt).format('Do MMMM, YYYY') %></td>
+                  <td>
+                    <a href="/view/usergames/update/<%= usergame.id_user %>"><button class="btn btn-success btn-sm">Edit Data</button></a>
+                    <!-- <a href="/view/usergames/delete/<%= usergame.id_user %>"
+                      ><button class="btn btn-danger btn-sm">Delete Data</button></a
+                    > -->
+                  </td>
+                </tr>
+                 <% } else { %>
+                <tr>
+                  <td colspan="7" class="text-center">Tidak ada data!</td>
+                </tr>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <%- include('../partials/_footer') %>
+
+</html>
