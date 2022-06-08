@@ -58,7 +58,7 @@ module.exports = {
       id_user: req.body.id_user,
       skor: req.body.skor,
       tanggal_bermain: req.body.tanggal_bermain,
-      gameplay_video: req.file.filename != null ? req.file.filename : null,
+      gameplay_video: req.file != null ? req.file.filename : null,
     })
       .then((result) => {
         res.status(200).json({ message: 'Berhasil Membuat User Game History', result });

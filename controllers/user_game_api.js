@@ -101,7 +101,7 @@ module.exports = {
         username: username,
         email: email,
         password: hashedPassword,
-        avatar: req.file.filename != null ? req.file.filename : null,
+        avatar: req.file != null ? req.file.filename : null,
         id_role: req.body.id_role,
       },
       {

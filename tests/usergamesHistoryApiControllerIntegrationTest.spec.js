@@ -20,7 +20,7 @@ describe('User Games History API Controller Testing', () => {
       console.log('error ceunah', error);
     }
     await request(app).post('/api/register').send({ username: 'admin', email: 'admin@mail.com', password: 'admin', id_role: 1 });
-    await request(app).post('/api/register').send({ username: 'user', email: 'user@mail.com', password: 'user', id_role: 1 });
+    await request(app).post('/api/register').send({ username: 'user', email: 'user@mail.com', password: 'user', id_role: 2 });
 
     // await request(app).post('/api/register').send({ username: 'malik', email: 'malik@mail.com', password: 'malik' });
     const login = await request(app).post('/api/login').send({ username: 'admin', password: 'admin' });
@@ -29,7 +29,9 @@ describe('User Games History API Controller Testing', () => {
 
   afterAll(async () => {
     try {
-      await sequelize.query('TRUNCATE user_games, user_game_biodata, user_game_histories RESTART IDENTITY;', { type: QueryTypes.RAW });
+      await sequelize.query('TRUNCATE user_roles, user_games, user_game_biodata, user_game_histories RESTART IDENTITY;', {
+        type: QueryTypes.RAW,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -80,12 +82,13 @@ describe('User Games History API Controller Testing', () => {
   });
 
   test('run /api/create-user-game-history To Create User Games History Data with Auth', async () => {
-    const { body, statusCode } = await request(app).post('/api/create-user-game-history').set({ Authorization: token }).send({
+    const { body, statusCode, error } = await request(app).post('/api/create-user-game-history').set({ Authorization: token }).send({
       skor: 92,
       tanggal_bermain: '2022-05-11',
       gameplay_video: null,
       id_user: 1,
     });
+    console.log('error create', error.text);
     expect(statusCode).toEqual(200);
     expect(body.message).toEqual('Berhasil Membuat User Game History');
     expect(body.result.skor).toEqual('92');
