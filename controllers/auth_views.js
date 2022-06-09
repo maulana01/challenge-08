@@ -1,14 +1,9 @@
 /** @format */
 
-const express = require('express');
-const app = express();
 const { UserGame } = require('../models');
 const bcrypt = require('bcrypt');
-const flash = require('express-flash');
 const nodemailer = require('nodemailer');
 const MailChecker = require('mailchecker');
-
-app.use(flash());
 
 module.exports = {
   registerPage: (req, res) => {

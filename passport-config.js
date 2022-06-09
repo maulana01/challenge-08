@@ -10,11 +10,11 @@ passport.use(
     try {
       const user = await UserGame.findOne({ where: { username: username } });
       if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
+        return done(null, false, { message: 'Username Salah!' });
       }
       const passVal = await bcrypt.compare(password, user.password);
       if (!passVal) {
-        return done(null, false, { message: 'Incorrect password.' });
+        return done(null, false, { message: 'Password Salah!' });
       }
       return done(null, user);
     } catch (err) {

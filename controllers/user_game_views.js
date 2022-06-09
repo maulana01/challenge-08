@@ -82,6 +82,7 @@ module.exports = {
       id_role: req.body.id_role,
     })
       .then((result) => {
+        req.flash('success', 'Berhasil membuat user game');
         res.redirect('/view');
       })
       .catch((err) => {

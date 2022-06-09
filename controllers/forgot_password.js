@@ -1,16 +1,11 @@
 /** @format */
 
-const express = require('express');
-const app = express();
 const { UserGame } = require('../models');
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
-const flash = require('express-flash');
 const crypto = require('crypto');
 const otpGenerator = require('otp-generator');
 const MailChecker = require('mailchecker');
-
-app.use(flash());
 
 module.exports = {
   sendEmailForgotPassword: async (req, res) => {

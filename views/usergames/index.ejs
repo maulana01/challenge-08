@@ -8,6 +8,23 @@
             <a href="/view/usergames/create" class="btn btn-success">Create User Game</a>
           </div>
 
+          <% if (messages.success) { %>
+            <input type="hidden" id="showModal" />
+            <div class="modal fade" id="exampleModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exampleModalLabel">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header bg-success">
+                    <h5 class="modal-title text-white" id="exampleModalLabel">Success</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p><%= messages.success %></p>
+                  </div>
+                </div>
+              </div>
+          <% } %>
+
+        </div>
           <div class="table-responsive">
             <table class="table table-striped table-sm">
               <thead>
@@ -48,7 +65,17 @@
         </main>
       </div>
     </div>
+    <script type="text/javascript">
+      $(window).on('load', function() {
+        if(document.getElementById('showModal')) {
+          $('#exampleModal').modal('show');
+        }
+      });
 
+      setTimeout(function() {
+        $('#exampleModal').modal('hide');
+      }, 3000);
+    </script>
     <%- include('../partials/_footer') %>
 
 </html>
