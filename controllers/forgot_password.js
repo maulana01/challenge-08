@@ -284,156 +284,160 @@ module.exports = {
         res.render('error', { status: res.status(500), err: err.message });
       });
   },
-  sendEmailForgotPasswordApi: async (req, res) => {
-    UserGame.findOne({
-      where: {
-        email: req.body.email,
-      },
-    })
-      .then((user) => {
-        if (user) {
-          const token = crypto.randomBytes(20).toString('hex');
-          UserGame.update(
-            {
-              forgotPasswordToken: token,
-              // resetPasswordExpires: Date.now() + 3600000,
-            },
-            {
-              where: {
-                email: req.body.email,
-              },
-            }
-          )
-            .then(() => {
-              let msgType, msg;
-              const transporter = nodemailer.createTransport({
-                service: 'gmail',
-                auth: {
-                  user: 'maulanaimammalik4@gmail.com',
-                  pass: 'eljjzghkqmaveulm',
-                },
-              });
-
-              // console.log('ini req protocol', req.protocol);
-              // console.log('ini req full url', req.originalUrl);
-              // console.log('ini req origin', req.get('origin'));
-              // console.log('ini list all req', req);
-
-              const mailOptions = {
-                from: 'maulanaimammalik4@gmail.com',
-                to: req.body.email,
-                subject: 'Forgot Password Message!',
-                html:
-                  '<html><h1>Klik link berikut untuk mengubah password anda</h1><a href=' +
-                  req.get('origin') +
-                  '/reset-password?token=' +
-                  token +
-                  '>Reset Password</a></html>',
-              };
-
-              // console.log(mailOptions.html);
-
-              transporter.sendMail(mailOptions, function (error, info) {
-                if (error) {
-                  console.log(error);
-                  msgType = 'error';
-                  msg = 'Email tidak terkirim, Pastikan Email anda valid';
-                } else {
-                  console.log('Email Sent:', info.response);
-                  msgType = 'success';
-                  msg = 'Email terkirim, silahkan cek email anda';
-                }
-                res.status(200).json({ message: msg });
-              });
-            })
-            .catch((err) => {
-              res.status(500).json({ err: err.message });
-            });
-        } else {
-          res.status(401).json({ err: 'Email not found' });
-        }
-      })
-      .catch((err) => {
-        res.status(500).json({ err: err.message });
-      });
-  },
-  resetPasswordApi: async (req, res) => {
-    UserGame.findOne({
-      where: {
-        forgotPasswordToken: req.query.token,
-        // resetPasswordExpires: { $gt: Date.now() },
-      },
-    })
-      .then((user) => {
-        if (user) {
-          // console.log('ini hasil get user', user);
-          res.render('reset-password', {
-            token: user.dataValues.forgotPasswordToken,
-          });
-        } else {
-          res.status(401).json({ err: 'Token tidak valid' });
-        }
-      })
-      .catch((err) => {
-        res.status(500).json({ err: 'Token tidak ada' });
-      });
-  },
-  updatePasswordApi: async (req, res) => {
-    let msgType, msg;
-    UserGame.findOne({
-      where: {
-        forgotPasswordToken: req.body.forgotPasswordToken,
-        // resetPasswordExpires: { $gt: Date.now() },
-      },
-    })
-      .then((user) => {
-        if (user) {
-          bcrypt.compare(req.body.password, user.password, (err, result) => {
-            if (result) {
-              msgType = 'error';
-              msg = 'Password sudah pernah digunakan';
-              // req.flash(msgType, msg);
-              // res.redirect('/reset-password?token=' + req.body.forgotPasswordToken);
-              res.status(401).json({ err: msg });
-              // res.render('error', { status: res.status(401), err: 'Password sudah digunakan' });
-            } else {
-              bcrypt.hash(req.body.password, 10, (err, hash) => {
-                if (err) {
-                  res.status(500).json({ err: err.message });
-                } else {
-                  UserGame.update(
-                    {
-                      password: hash,
-                      forgotPasswordToken: null,
-                      // resetPasswordExpires: null,
-                    },
-                    {
-                      where: {
-                        forgotPasswordToken: req.body.forgotPasswordToken,
-                      },
-                    }
-                  )
-                    .then(() => {
-                      msgType = 'success';
-                      msg = 'Password berhasil diubah';
-                      // req.flash(msgType, msg);
-                      // res.redirect('/login');
-                      res.status(200).json({ message: msg });
-                      // res.render('login', { status: res.status(200), msg: 'Password berhasil diubah' });
-                    })
-                    .catch((err) => {
-                      res.status(500).json({ err: err.message });
-                    });
-                }
-              });
-            }
-          });
-        } else {
-          res.status(401).json({ err: 'Token tidak valid' });
-        }
-      })
-      .catch((err) => {
-        res.status(500).json({ err: err.message });
-      });
-  },
 };
+/* ============================== NOT USED ============================== */
+//   sendEmailForgotPasswordApi: async (req, res) => {
+//     UserGame.findOne({
+//       where: {
+//         email: req.body.email,
+//       },
+//     })
+//       .then((user) => {
+//         if (user) {
+//           const token = crypto.randomBytes(20).toString('hex');
+//           UserGame.update(
+//             {
+//               forgotPasswordToken: token,
+//               // resetPasswordExpires: Date.now() + 3600000,
+//             },
+//             {
+//               where: {
+//                 email: req.body.email,
+//               },
+//             }
+//           )
+//             .then(() => {
+//               let msgType, msg;
+//               const transporter = nodemailer.createTransport({
+//                 service: 'gmail',
+//                 auth: {
+//                   user: 'maulanaimammalik4@gmail.com',
+//                   pass: 'eljjzghkqmaveulm',
+//                 },
+//               });
+
+//               // console.log('ini req protocol', req.protocol);
+//               // console.log('ini req full url', req.originalUrl);
+//               // console.log('ini req origin', req.get('origin'));
+//               // console.log('ini list all req', req);
+
+//               const mailOptions = {
+//                 from: 'maulanaimammalik4@gmail.com',
+//                 to: req.body.email,
+//                 subject: 'Forgot Password Message!',
+//                 html:
+//                   '<html><h1>Klik link berikut untuk mengubah password anda</h1><a href=' +
+//                   req.get('origin') +
+//                   '/reset-password?token=' +
+//                   token +
+//                   '>Reset Password</a></html>',
+//               };
+
+//               // console.log(mailOptions.html);
+
+//               transporter.sendMail(mailOptions, function (error, info) {
+//                 if (error) {
+//                   console.log(error);
+//                   msgType = 'error';
+//                   msg = 'Email tidak terkirim, Pastikan Email anda valid';
+//                 } else {
+//                   console.log('Email Sent:', info.response);
+//                   msgType = 'success';
+//                   msg = 'Email terkirim, silahkan cek email anda';
+//                 }
+//                 res.status(200).json({ message: msg });
+//               });
+//             })
+//             .catch((err) => {
+//               res.status(500).json({ err: err.message });
+//             });
+//         } else {
+//           res.status(401).json({ err: 'Email not found' });
+//         }
+//       })
+//       .catch((err) => {
+//         res.status(500).json({ err: err.message });
+//       });
+//   },
+//   resetPasswordApi: async (req, res) => {
+//     UserGame.findOne({
+//       where: {
+//         forgotPasswordToken: req.query.token,
+//         // resetPasswordExpires: { $gt: Date.now() },
+//       },
+//     })
+//       .then((user) => {
+//         if (user) {
+//           // console.log('ini hasil get user', user);
+//           res.render('reset-password', {
+//             token: user.dataValues.forgotPasswordToken,
+//           });
+//         } else {
+//           res.status(401).json({ err: 'Token tidak valid' });
+//         }
+//       })
+//       .catch((err) => {
+//         res.status(500).json({ err: 'Token tidak ada' });
+//       });
+//   },
+//   updatePasswordApi: async (req, res) => {
+//     let msgType, msg;
+//     UserGame.findOne({
+//       where: {
+//         forgotPasswordToken: req.body.forgotPasswordToken,
+//         // resetPasswordExpires: { $gt: Date.now() },
+//       },
+//     })
+//       .then((user) => {
+//         if (user) {
+//           bcrypt.compare(req.body.password, user.password, (err, result) => {
+//             if (result) {
+//               msgType = 'error';
+//               msg = 'Password sudah pernah digunakan';
+//               // req.flash(msgType, msg);
+//               // res.redirect('/reset-password?token=' + req.body.forgotPasswordToken);
+//               res.status(401).json({ err: msg });
+//               // res.render('error', { status: res.status(401), err: 'Password sudah digunakan' });
+//             } else {
+//               bcrypt.hash(req.body.password, 10, (err, hash) => {
+//                 if (err) {
+//                   res.status(500).json({ err: err.message });
+//                 } else {
+//                   UserGame.update(
+//                     {
+//                       password: hash,
+//                       forgotPasswordToken: null,
+//                       // resetPasswordExpires: null,
+//                     },
+//                     {
+//                       where: {
+//                         forgotPasswordToken: req.body.forgotPasswordToken,
+//                       },
+//                     }
+//                   )
+//                     .then(() => {
+//                       msgType = 'success';
+//                       msg = 'Password berhasil diubah';
+//                       // req.flash(msgType, msg);
+//                       // res.redirect('/login');
+//                       res.status(200).json({ message: msg });
+//                       // res.render('login', { status: res.status(200), msg: 'Password berhasil diubah' });
+//                     })
+//                     .catch((err) => {
+//                       res.status(500).json({ err: err.message });
+//                     });
+//                 }
+//               });
+//             }
+//           });
+//         } else {
+//           res.status(401).json({ err: 'Token tidak valid' });
+//         }
+//       })
+//       .catch((err) => {
+//         res.status(500).json({ err: err.message });
+//       });
+//   },
+// };
+
+/* ============================== NOT USED ============================== */
