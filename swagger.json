@@ -13,7 +13,7 @@
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
-  "host": "localhost:3000",
+  "host": "imam-challenge6-dashboard-usgm.herokuapp.com",
   "basePath": "/api",
   "tags": [
     {
@@ -41,7 +41,7 @@
       }
     }
   ],
-  "schemes": ["http"],
+  "schemes": ["https"],
   "security": [
     {
       "api_key": []
