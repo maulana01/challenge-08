@@ -139,20 +139,20 @@ module.exports = {
       },
     });
     // console.log('ini hasil getdata buat delete', getData.dataValues.avatar);
-    if (getData !== null) {
-      if (getData.avatar) {
-        const _path = path.join(__dirname, '..', 'images', getData.dataValues.avatar);
-        // console.log('ini path', _path);
-        fs.unlinkSync(_path, (err) => {
-          if (err) {
-            console.log('failed to delete local image:' + err);
-          } else {
-            console.log('successfully deleted local image');
-          }
-        });
-        // }
+    // if (getData !== null) {
+    // if (getData.avatar) {
+    const _path = path.join(__dirname, '..', 'images', getData.dataValues.avatar);
+    // console.log('ini path', _path);
+    fs.unlinkSync(_path, (err) => {
+      if (err) {
+        console.log('failed to delete local image:' + err);
+      } else {
+        console.log('successfully deleted local image');
       }
-    }
+    });
+    // }
+    //   }
+    // }
     UserGame.destroy({
       where: {
         id_user: req.params.id,
